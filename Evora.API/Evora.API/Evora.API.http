@@ -1,0 +1,6 @@
+@Evora.API_HostAddress = http://localhost:5186
+
+GET {{Evora.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

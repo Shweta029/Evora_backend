@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Evora.API/.vs/Evora.API/v17
+/.vs
+/Evora.API/.vs/Evora.API
+/Evora.API/Evora.Service/obj
+/Evora.API/Evora.Repository/obj
+/Evora.API/Evora.Interface/obj
+/Evora.API/Evora.Domain/obj
+/Evora.API/Evora.API/obj
