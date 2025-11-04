@@ -5,7 +5,7 @@ steps:
       - 'build'
       - '-t'
       - 'asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora/evora-be:$COMMIT_SHA'
-      - './Evora.API'
+      - '.'
 
   # Step 2: Push image
   - name: 'gcr.io/cloud-builders/docker'
