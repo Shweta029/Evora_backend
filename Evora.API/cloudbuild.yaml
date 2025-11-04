@@ -18,15 +18,14 @@ steps:
     args:
       - 'set'
       - 'image'
-      - 'deployment/evora-be-deployment'
-      - 'evora-be-container=asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora-repo/evora-be:$COMMIT_SHA'
+      - 'deployment/evorabe-deployment'
+      - 'evorabe=asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora-repo/evora-be:$COMMIT_SHA'
     env:
       - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=evora-cluster'
 
 images:
   - 'asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora-repo/evora-be:$COMMIT_SHA'
+
 options:
-
   logging: CLOUD_LOGGING_ONLY
-
