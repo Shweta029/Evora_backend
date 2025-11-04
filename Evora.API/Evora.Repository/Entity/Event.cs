@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evora.Repository.Entity
 {
-    [Table("Events")]
+    [Table("events", Schema ="event")]
     public class Event
     {
         [Key]
@@ -45,7 +45,7 @@ namespace Evora.Repository.Entity
 
         [ForeignKey("CreatedByUser")]
         [Column("CreatedBy")]
-        public int CreatedBy { get; set; }
+        public Guid CreatedBy { get; set; }
 
         public User? CreatedByUser { get; set; }
 

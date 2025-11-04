@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Evora.Repository.Entity
 {
 
-    [Table("Bookings")]
+    [Table("bookings",Schema ="event")]
     public class Booking
     {
         [Key]
@@ -14,14 +14,14 @@ namespace Evora.Repository.Entity
         [Required]
         [ForeignKey("User")]
         [Column("UserId")]
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public User? User { get; set; }
 
         [Required]
         [ForeignKey("Event")]
         [Column("EventId")]
-        public int EventId { get; set; }
+        public Guid EventId { get; set; }
 
         public Event? Event { get; set; }
 

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Evora.Repository.Entity
 {
-    [Table("Payments")]
+    [Table("payments", Schema ="payment")]
     public class Payment
     {
         [Key]
