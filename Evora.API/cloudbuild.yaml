@@ -4,14 +4,14 @@ steps:
     args:
       - 'build'
       - '-t'
-      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/evora/evora-be:$COMMIT_SHA'
+      - 'asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora/evora-be:$COMMIT_SHA'
       - '.'
 
   # Step 2: Push image
   - name: 'gcr.io/cloud-builders/docker'
     args:
       - 'push'
-      - 'asia-south1-docker.pkg.dev/$PROJECT_ID/evora/evora-be:$COMMIT_SHA'
+      - 'asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora/evora-be:$COMMIT_SHA'
 
   # Step 3: Deploy to GKE
   - name: 'gcr.io/cloud-builders/kubectl'
@@ -19,13 +19,13 @@ steps:
       - 'set'
       - 'image'
       - 'deployment/evora-be-deployment'
-      - 'evora-be-container=asia-south1-docker.pkg.dev/$PROJECT_ID/evora/evora-be:$COMMIT_SHA'
+      - 'evora-be-container=asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora/evora-be:$COMMIT_SHA'
     env:
       - 'CLOUDSDK_COMPUTE_REGION=asia-south1'
       - 'CLOUDSDK_CONTAINER_CLUSTER=evora-cluster'
 
 images:
-  - 'asia-south1-docker.pkg.dev/$PROJECT_ID/evora/evora-be:$COMMIT_SHA'
-
+  - 'asia-south1-docker.pkg.dev/tactile-visitor-476817-a1/evora/evora-be:$COMMIT_SHA'
 options:
+
   logging: CLOUD_LOGGING_ONLY
