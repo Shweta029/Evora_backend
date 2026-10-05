@@ -1,8 +1,6 @@
-﻿using Evora.Repository;
-using Evora.Repository.Entity;
+using Evora.Interface.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
 
 namespace Evora.API.Controllers
 {
@@ -10,11 +8,11 @@ namespace Evora.API.Controllers
     [Route("api/[controller]")]
     public class BookingsController : ControllerBase
     {
-        private readonly EvoraDbContext _context;
+        private readonly IBookingService _bookingService;
 
-        public BookingsController(EvoraDbContext context)
+        public BookingsController(IBookingService bookingService)
         {
-            _context = context;
+            _bookingService = bookingService;
         }
 
         [HttpGet("get-all-bookings")]
@@ -30,23 +28,40 @@ namespace Evora.API.Controllers
             return Ok(bookings);
         }
 
-        [HttpPost("add-booking")]
-        public async Task<IActionResult> AddBooking([FromBody] Booking booking)
+        [HttpGet("get-all-booked-events")]
+        public async Task<IActionResult> GetAllBookedEvents()
         {
-            if (booking == null)
-                return BadRequest("Invalid booking data.");
+            var bookings = await _bookingService.GetAllBookingsAsync();
 
-            _context.Bookings.Add(booking);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { message = "Booking added successfully!" });
-        }
-
-        [HttpGet("get-all-bookings-1")]
-        public async Task<IActionResult> GetBookings1()
-        {
-            var bookings = await _context.Bookings.ToListAsync();
             return Ok(bookings);
         }
+
+        [HttpGet("environment")]
+        public IActionResult GetEnvironment()
+        {
+            return Ok(new
+            {
+                Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"),
+                DotnetEnvironment = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT")
+            });
+        }
+        //[HttpPost("add-booking")]
+        //public async Task<IActionResult> AddBooking([FromBody] Booking booking)
+        //{
+        //    if (booking == null)
+        //        return BadRequest("Invalid booking data.");
+
+        //    _context.Bookings.Add(booking);
+        //    await _context.SaveChangesAsync();
+
+        //    return Ok(new { message = "Booking added successfully!" });
+        //}
+
+        //[HttpGet("get-all-bookings-1")]
+        //public async Task<IActionResult> GetBookings1()
+        //{
+        //    var bookings = await _context.Bookings.ToListAsync();
+        //    return Ok(bookings);
+        //}
     }
 }
