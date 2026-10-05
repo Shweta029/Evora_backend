@@ -9,7 +9,7 @@ namespace Evora.API.Controllers
         [HttpGet("get-all-booked-events")]
         public IActionResult GetBookings()
         {
-            var bookedEvents = new List<object> { 
+            var bookedEvents = new List<object> {
                 new { Id = 1,CustomerName = "Rahul Sharma",EventName = "Corporate Annual Meetup", Date = "2026-10-05", Amount = 2500 },
                 new { Id = 2, CustomerName = "Priya Patel", EventName = "Wedding Ceremony", Date = "2026-10-12", Amount = 1800 },
                 new{ Id = 3, CustomerName = "Amit Shah", EventName = "Birthday Celebration", Date = "2026-10-18", Amount = 3200 },
@@ -18,6 +18,16 @@ namespace Evora.API.Controllers
             };
 
             return Ok(bookedEvents);
+        }
+
+        [HttpGet("config")]
+        public IActionResult GetConfig()
+        {
+            return Ok(new
+            {
+                Environment = Environment.GetEnvironmentVariable("APP_ENVIRONMENT"),
+                Version = Environment.GetEnvironmentVariable("APP_VERSION")
+            });
         }
     }
 }
