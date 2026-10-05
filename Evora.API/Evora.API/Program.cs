@@ -1,31 +1,15 @@
-using Evora.Repository;
-using Microsoft.EntityFrameworkCore;
-using System;
+using Evora.API;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+var startup = new Startup(builder.Configuration);
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+// Register all services from Startup
+startup.ConfigureServices(builder.Services);
 
-// Add EF Core and your connection string
-builder.Services.AddDbContext<EvoraDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-//}
-
-
-app.UseAuthorization();
-
-app.MapControllers();
+// Configure middleware from Startup
+startup.Configure(app, app.Environment);
 
 app.Run();
