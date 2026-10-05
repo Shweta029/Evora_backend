@@ -1,4 +1,5 @@
-﻿using Evora.Interface.IServices;
+using Evora.Interface.IRepositories;
+using Evora.Interface.IServices;
 using Evora.Repository;
 using Evora.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,48 +30,49 @@ namespace Evora.API
             // Add Controllers
             services.AddControllers();
 
-            // Add Swagger/OpenAPI
+            //// Add Swagger/OpenAPI
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Eventra API", Version = "v1" });
 
-                // JWT Authorization in Swagger
-                var securitySchema = new OpenApiSecurityScheme
-                {
-                    Name = "Authorization",
-                    Description = "Enter 'Bearer {token}'",
-                    In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
-                    Scheme = "Bearer"
-                };
-                c.AddSecurityDefinition("Bearer", securitySchema);
-                c.AddSecurityRequirement(new OpenApiSecurityRequirement
-            {
-                    { securitySchema, new[] { "Bearer" } }
-            });
+                //// JWT Authorization in Swagger
+                //var securitySchema = new OpenApiSecurityScheme
+                //{
+                //    Name = "Authorization",
+                //    Description = "Enter 'Bearer {token}'",
+                //    In = ParameterLocation.Header,
+                //    Type = SecuritySchemeType.ApiKey,
+                //    Scheme = "Bearer"
+                //};
+
+                //c.AddSecurityDefinition("Bearer", securitySchema);
+                //c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                //{
+                //    { securitySchema, new[] { "Bearer" } }
+                //});
             });
 
-            // Add JWT Authentication
-            var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.RequireHttpsMetadata = false; // set true in production
-                options.SaveToken = true;
-                options.TokenValidationParameters = new TokenValidationParameters
-                {
-                    ValidateIssuer = true,
-                    ValidateAudience = false,
-                    ValidateLifetime = true,
-                    ValidateIssuerSigningKey = true,
-                    ValidIssuer = Configuration["Jwt:Issuer"],
-                    IssuerSigningKey = new SymmetricSecurityKey(key)
-                };
-            });
+            //// Add JWT Authentication
+            //var key = Encoding.ASCII.GetBytes(Configuration["Jwt:Key"]);
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //})
+            //.AddJwtBearer(options =>
+            //{
+            //    options.RequireHttpsMetadata = false; // set true in production
+            //    options.SaveToken = true;
+            //    options.TokenValidationParameters = new TokenValidationParameters
+            //    {
+            //        ValidateIssuer = true,
+            //        ValidateAudience = false,
+            //        ValidateLifetime = true,
+            //        ValidateIssuerSigningKey = true,
+            //        ValidIssuer = Configuration["Jwt:Issuer"],
+            //        IssuerSigningKey = new SymmetricSecurityKey(key)
+            //    };
+            //});
 
             // Add CORS for Angular frontend
             services.AddCors(options =>
@@ -85,6 +87,12 @@ namespace Evora.API
                             .AllowCredentials();
                     });
             });
+
+            // Dependency Injection for Repository
+            //services.AddScoped<IEventRepository, >();
+            //services.AddScoped<IEventRepository, EventService>();
+            services.AddScoped<IBookingRepository, BookingRepository>();
+            //services.AddScoped<IPaymentRepository, PaymentService>();
 
             // Dependency Injection for Services
             services.AddScoped<IAuthService, AuthService>();
