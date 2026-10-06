@@ -1,0 +1,23 @@
+using Evora.Domain.Entity;
+using Evora.Interface.IRepositories;
+using Microsoft.EntityFrameworkCore;
+
+namespace Evora.Repository
+{
+    public class BookingRepository : IBookingRepository
+    {
+        private readonly EvoraDbContext _context;
+
+        public BookingRepository(EvoraDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<List<Booking>> GetAllBookingsAsync()
+        {
+            return await _context.Bookings
+                .AsNoTracking()
+                .ToListAsync();
+        }
+    }
+}
